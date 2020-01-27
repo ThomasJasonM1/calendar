@@ -1,0 +1,33 @@
+.input-group>.input-group-prepend {
+    flex: 0 0 7% !important;
+}
+
+.input-group>.input-group-append {
+    flex: 0 0 5% !important;
+}
+
+.button {
+    width: 100% !important;
+}
+
+.input-group .input-group-text {
+    width: 100%;
+}
+
+@media (max-width: 991px) {
+    .input-group>.input-group-prepend {
+        flex: 0 0 10% !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .input-group>.input-group-prepend {
+        flex: 0 0 15% !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .input-group>.input-group-prepend {
+        flex: 0 0 19% !important;
+    }
+}

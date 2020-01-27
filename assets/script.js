@@ -18,13 +18,14 @@ setInterval(() => {
 while (moment(start).format('H')  <= 21) {
     let currentHour = moment(new Date).format('H');
     let hour = moment(start).format('H');
+    let timeText = moment(start).format('h a');
 
     // This div will hold everything
     let newItem = $('<div>');
 
     // Hour Div
     newItem.attr('class', 'input-group input-group-lg mb-3');
-    let timeSpan = $('<span>').attr('class', 'input-group-text').text(moment(start).format('h a'));
+    let timeSpan = $('<span>').attr('class', 'input-group-text').text(timeText);
     let timeDiv = $('<div>').append(timeSpan);
     timeDiv.attr('class', 'input-group-prepend');
 
@@ -35,7 +36,7 @@ while (moment(start).format('H')  <= 21) {
     // Save Div
     let saveDiv = $('<div>').attr('class', 'input-group-append');
     let button = $('<button>');
-    button.attr('type', 'button').attr('class', 'button').attr('data-time', moment(start).format('h a'));
+    button.attr('type', 'button').attr('class', 'button bg-primary').attr('data-time', moment(start).format('h a'));
 
     // Icon
     let icon = $('<i>');
@@ -84,6 +85,7 @@ $('document').ready(() => {
     let localStorageValue = moment(new Date()).format('LL');
     let currentStorage = JSON.parse(localStorage.getItem(localStorageValue));
 
+    console.log(currentStorage);
     if (currentStorage) {
         currentStorage.map(hour => {
             let currentHour = hour.time;
