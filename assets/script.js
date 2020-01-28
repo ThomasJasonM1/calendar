@@ -14,6 +14,34 @@ setInterval(() => {
     $('#current-time').text(time);
 }, 1000)
 
+// This will reload background colors for current time, in case the user leaves the page open
+setInterval(() => {
+    let begin = moment(new Date());
+    while (moment(begin).format('H') !== '9') {
+        begin = moment(begin).subtract(1, 'hour');
+    }
+    
+    $('input').removeClass('bg-success bg-danger bg-light text-light');
+
+    while (moment(begin).format('H') <= 21) {
+        let currentHour = moment(new Date()).format('H');
+        let inputHour = moment(begin).format('h a');
+        let hour = moment(begin).format('H');
+        let input = $(`input[data-input="${inputHour}"]`);
+
+        if (moment(new Date, 'hour').isBefore(begin, 'hour')) {
+            input.addClass('bg-success text-light');
+        } else if (hour === currentHour) {
+            input.addClass('bg-danger text-light');
+        } else {
+            input.addClass('bg-light');
+        }
+
+        begin = moment(begin).add(1, 'hour');
+    }
+
+}, 5000)
+
 // This creates all the hour items in a loop
 while (moment(start).format('H')  <= 21) {
     let currentHour = moment(new Date).format('H');
@@ -25,7 +53,7 @@ while (moment(start).format('H')  <= 21) {
 
     // Hour Div
     newItem.attr('class', 'input-group input-group-lg mb-3');
-    let timeSpan = $('<span>').attr('class', 'input-group-text').text(timeText);
+    let timeSpan = $('<span>').attr('class', 'input-group-text bg-white').text(timeText);
     let timeDiv = $('<div>').append(timeSpan);
     timeDiv.attr('class', 'input-group-prepend');
 
@@ -40,7 +68,7 @@ while (moment(start).format('H')  <= 21) {
 
     // Icon
     let icon = $('<i>');
-    icon.attr('class', 'glyphicon glyphicon-floppy-disk');
+    icon.attr('class', 'glyphicon glyphicon-floppy-save');
     icon.attr('data-time', moment(start).format('h a'));
     button.append(icon);
     saveDiv.append(button);
@@ -52,11 +80,14 @@ while (moment(start).format('H')  <= 21) {
     $('#main-wrapper').append(newItem);
 
     if (moment(new Date, 'hour').isBefore(start, 'hour')) {
-        timeSpan.addClass('bg-success text-light');
+        // timeSpan.addClass('bg-success text-light');
+        input.addClass('bg-success text-light');
     } else if (hour === currentHour) {
-        timeSpan.addClass('bg-danger text-light');
+        // timeSpan.addClass('bg-danger text-light');
+        input.addClass('bg-danger text-light');
     } else {
-        timeSpan.addClass('bg-light');
+        // timeSpan.addClass('bg-light');
+        input.addClass('bg-light');
     }
 
     // Add an hour so my loop will continue
@@ -85,7 +116,6 @@ $('document').ready(() => {
     let localStorageValue = moment(new Date()).format('LL');
     let currentStorage = JSON.parse(localStorage.getItem(localStorageValue));
 
-    console.log(currentStorage);
     if (currentStorage) {
         currentStorage.map(hour => {
             let currentHour = hour.time;
@@ -95,3 +125,4 @@ $('document').ready(() => {
         })
     }
 })
+
